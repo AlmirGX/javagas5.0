@@ -1,9 +1,9 @@
 var corpo = document.getElementById('corpo');
 var todos = JSON.parse(localStorage.getItem('tblFuncionarios')) || [];
 
-window.onload = RenderProd;
+window.onload = RenderFunc;
 
-function RenderProd() {
+function RenderFunc() {
     corpo.innerHTML = '';
 
     for(var func in todos) {
@@ -31,7 +31,7 @@ function RenderProd() {
         var div5 = document.createElement('button');
         div5.setAttribute('class', 'editar');
         div5.setAttribute('id', 'editar');
-        div5.setAttribute('onclick', `removeDivFunction(${p.id});`);
+        div5.setAttribute('onclick', ` removeDivFunction();`);
 
         div2.appendChild(div3);
         div2.appendChild(div4);
@@ -57,12 +57,60 @@ function RenderProd() {
         var span5 = document.createElement('span');
         span5.setAttribute('id', 'func');
         span5.innerHTML = `Função: ${p.Func}`;
+		
+		var span2 = document.createElement('span');
+        span2.setAttribute('id', 'tele');
+        span2.innerHTML = `Telefone: ${p.Tele}`;
+		
+		var span6 = document.createElement('span');
+        span6.setAttribute('id', 'datanasc');
+        span6.innerHTML = `Data Nasc: ${p.dataNasc}`;
+		
+			var span7 = document.createElement('span');
+        span7.setAttribute('id', 'email');
+        span7.innerHTML = `Email: ${p.Email}`;
+		
+var span8 = document.createElement('span');
+        span8.setAttribute('id', 'dataadm');
+        span8.innerHTML = `Data Adm: ${p.dataAdm}`;
+		
+		var span9 = document.createElement('span');
+        span9.setAttribute('id', 'cidade');
+        span9.innerHTML = `Cidade: ${p.Cidade}`;
+		
+		var span11 = document.createElement('span');
+        span11.setAttribute('id', 'rua');
+        span11.innerHTML = `Rua: ${p.Rua}`;
+		
+		var span22 = document.createElement('span');
+        span22.setAttribute('id', 'num');
+        span22.innerHTML = `Número: ${p.Num}`;
+		
+		var span33 = document.createElement('span');
+        span33.setAttribute('id', 'cep');
+        span33.innerHTML = `Cep: ${p.Cep}`;
+
+		var span44 = document.createElement('span');
+        span33.setAttribute('id', 'status');
+        span33.innerHTML = `Status: ${p.Status}`;
+
+
+
         div4.appendChild(span1);
-       
+        div4.appendChild(span2);
         div4.appendChild(span3);
         div4.appendChild(span4);
         div4.appendChild(span5);
-
+		div4.appendChild(span6);
+		div4.appendChild(span7);
+		div4.appendChild(span8);
+		div4.appendChild(span9);
+		div4.appendChild(span11);
+		div4.appendChild(span22);
+			div4.appendChild(span33);
+			div4.appendChild(span44);
+		
+		
         //vai dentro da div5
         var div6 = document.createElement('div');
         div6.setAttribute('class', 'img');
@@ -88,7 +136,7 @@ function edit(indice){
     produto = arrEd[indice];
 
     localStorage.setItem('EditFunc', funcionario);
-    location = 'EditarFunc.html';
+    location = 'Editfunc.html';
 }
 
 //Botão de navBar Mobile

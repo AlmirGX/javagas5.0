@@ -27,13 +27,31 @@ btnCadastrar.addEventListener('click', function () {
     let cpf = form.Cpf.value;
     let func = form.Func.value;
     let sal = form.Sal.value;
+	 let tele = form.Tele.value;
+	 let datanasc = form.dataNasc.value;
+	 	 let email = form.Email.value;
+	 	 let dataadm = form.dataAdm.value;
+	 	 let cidade = form.Cidade.value;
+		 let rua = form.Rua.value;
+		 let num = form.Num.value;
+		 let cep = form.Cep.value;
+		 let status = form.Status.value;
 
     var prod = JSON.stringify({
         id: ValId,
         Nome: nome,
         Cpf: cpf,
         Func: func,
-        Sal: sal
+        Sal: sal,
+		Tele: tele,
+		dataNasc: datanasc,
+		Email: email,
+		dataAdm: dataadm,
+		Cidade: cidade,
+		Rua: rua,
+		Num: num,
+		Cep: cep,
+		Status: status,
     });
 
     arrayProd.push(prod);
@@ -46,7 +64,15 @@ btnCadastrar.addEventListener('click', function () {
     form.Cpf.value = "--";
     form.Func.value = "";
     form.Sal.value = "";
-	
+	form.Tele.value = "";
+	form.dataNasc.value = "";
+	form.Email.value = "";
+	form.dataAdm.value = "";
+	form.Cidade.value = "";
+	form.Rua.value = "";
+	form.Num.value = "";
+	form.Cep.value = "";
+	form.Status.value = "";
 });
 
 var btnCancel = document.getElementById('cancel');
@@ -67,3 +93,74 @@ function mascaraCPF() {
         Cpf.value += "/";
     } 
 }
+
+
+function limpa_formulário_cep() {
+    //Limpa valores do formulário de cep.
+    document.getElementById('Rua').value = ("");
+    document.getElementById('Bairro').value = ("");
+    document.getElementById('Cidade').value = ("");
+    document.getElementById('Uf').value = ("");
+    document.getElementById('Ibge').value = ("");
+}
+
+function meu_callback(conteudo) {
+    if (!("erro" in conteudo)) {
+        //Atualiza os campos com os valores.
+        document.getElementById('Rua').value = (conteudo.logradouro);
+        document.getElementById('Bairro').value = (conteudo.bairro);
+        document.getElementById('Cidade').value = (conteudo.localidade);
+        document.getElementById('Uf').value = (conteudo.uf);
+        document.getElementById('Ibge').value = (conteudo.ibge);
+    } //end if.
+    else {
+        //CEP não Encontrado.
+        limpa_formulário_cep();
+        alert("CEP não encontrado.");
+    }
+}
+
+function pesquisacep(valor) {
+
+    //Nova variável "cep" somente com dígitos.
+    var cep = valor.replace(/\D/g, '');
+
+    //Verifica se campo cep possui valor informado.
+    if (cep != "") {
+
+        //Expressão regular para validar o CEP.
+        var validacep = /^[0-9]{8}$/;
+
+        //Valida o formato do CEP.
+        if (validacep.test(cep)) {
+
+            //Preenche os campos com "..." enquanto consulta webservice.
+            document.getElementById('Rua').value = "...";
+          
+            document.getElementById('Cidade').value = "...";
+
+
+            //Cria um elemento javascript.
+            var script = document.createElement('script');
+
+            //Sincroniza com o callback.
+            script.src = 'https://viacep.com.br/ws/' + cep + '/json/?callback=meu_callback';
+
+            //Insere script no documento e carrega o conteúdo.
+            document.body.appendChild(script);
+
+        } //end if.
+        else {
+            //cep é inválido.
+            limpa_formulário_cep();
+            alert("Formato de CEP inválido.");
+        }
+    } //end if.
+    else {
+        //cep sem valor, limpa formulário.
+        limpa_formulário_cep();
+    }
+};
+
+
+
